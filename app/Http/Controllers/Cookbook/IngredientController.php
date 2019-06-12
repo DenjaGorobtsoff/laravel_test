@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Cookbook;
 
+use App\Models\CookbookIngredient;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\CookbookIngredient as Ingredients;
@@ -26,7 +27,7 @@ class IngredientController extends BaseController
      */
     public function create()
     {
-        //
+        return view('cookbook.ingredient.create');
     }
 
     /**
@@ -37,7 +38,15 @@ class IngredientController extends BaseController
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->input();
+
+        $table = new CookbookIngredient();
+
+        $table
+            ->fill($data)
+            ->save();
+
+        return redirect('/cookbook/ingredients');
     }
 
     /**

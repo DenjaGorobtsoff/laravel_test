@@ -10,12 +10,15 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
                     <!-- Authentication Links -->
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('recipe.create') }}">{{ __('Create New Recipe') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('ingredients.index') }}">{{ __('Ingredients') }}</a>
-                            </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('recipe.create') }}">{{ __('Create New Recipe') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('ingredients.index') }}">{{ __('Ingredients') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('ingredients.create') }}">{{ __('Create New Ingredient') }}</a>
+                    </li>
                 </ul>
             </div>
         </div>
