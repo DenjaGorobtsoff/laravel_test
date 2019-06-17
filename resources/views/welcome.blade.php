@@ -80,6 +80,12 @@
             @endif
 
             <div class="content">
+                {{--POST AND COOKBOOK BUTTONS------------------------------------------------------------------}}
+                <div class="links">
+                    <a class="nav-link" href="{{  route('blog.posts.index') }}">Posts</a>
+                    <a class="nav-link" href="{{  route('recipe.index') }}">Cook Book</a>
+                </div>
+                {{---------------------------------------------------------------------------------------------}}
                 <div class="title m-b-md">
                     Laravel
                 </div>

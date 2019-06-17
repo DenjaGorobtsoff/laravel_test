@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Blog;
 
+use App\Http\Requests\BlogCreateValidation;
+use App\Models\BlogCategory as Categories;
 use App\Models\BlogPost;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -15,8 +17,7 @@ class PostController extends BaseController
      */
     public function index()
     {
-        $items = BlogPost::all();
-
+        $items = BlogPost::orderBy('created_at', 'desc')->get();
         return view('blog.posts.index', compact('items'));
     }
 
@@ -27,7 +28,11 @@ class PostController extends BaseController
      */
     public function create()
     {
-        //
+        $items = new BlogPost ();
+
+        $categories = Categories::all();
+
+        return view('blog.posts.create', compact('items', 'categories'));
     }
 
     /**
@@ -36,9 +41,19 @@ class PostController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BlogCreateValidation $request)
     {
-        //
+        $request['user_id'] = auth()->user()->id;
+        $request['content_html'] = $request['content_raw'];
+        if (!empty($request['is_published'])) {
+            $request['is_published'] = 1;
+        }
+        //dd($request->all());
+        $blog = new BlogPost($request->all());
+
+        $blog->save();
+
+        return redirect('/blog/posts');
     }
 
     /**

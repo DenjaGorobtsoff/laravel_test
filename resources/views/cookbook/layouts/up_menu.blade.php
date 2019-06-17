@@ -2,12 +2,11 @@
     <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
         <div class="container">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav mr-auto">
-
-                </ul>
-
                 <!-- Right Side Of Navbar -->
+                @php
+                   // dd($items->getQueueableClass());
+                @endphp
+                @if( $items->getQueueableClass() != 'App\Models\BlogPost' )
                 <ul class="navbar-nav ml-auto">
                     <!-- Authentication Links -->
                     <li class="nav-item">
@@ -20,6 +19,14 @@
                         <a class="nav-link" href="{{ route('ingredients.create') }}">{{ __('Create New Ingredient') }}</a>
                     </li>
                 </ul>
+                @else
+                <ul class="navbar-nav ml-auto">
+                    <!-- Authentication Links -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('blog.posts.create') }}">{{ __('Create New Post') }}</a>
+                    </li>
+                </ul>
+                @endif
             </div>
         </div>
     </nav>
