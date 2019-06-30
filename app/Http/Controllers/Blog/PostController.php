@@ -7,6 +7,8 @@ use App\Models\BlogCategory as Categories;
 use App\Models\BlogPost;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Repositories\BlogRepositories;
+use App\Repositories\CategoryRepositories;
 
 class PostController extends BaseController
 {
@@ -32,7 +34,8 @@ class PostController extends BaseController
 
         $categories = Categories::all();
 
-        return view('blog.posts.create', compact('items', 'categories'));
+        return view('blog.posts.create',
+            compact('items', 'categories'));
     }
 
     /**
@@ -73,9 +76,18 @@ class PostController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, BlogRepositories $blogRepository)
     {
-        //
+        $item = $blogRepository->getEdit($id);
+
+        if (empty($item)) {
+            abort(404);
+        }
+
+        $categories = new CategoryRepositories();
+        $forSelect = $categories->getSelectItems();
+
+        return view('blog.posts.edit', compact('item', 'forSelect'));
     }
 
     /**
@@ -87,7 +99,33 @@ class PostController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        //
+        $item = BlogPost::find($id);
+
+        if (empty($item)) {
+            return back()
+                ->withErrors(['msg' => "Post whit id - {$id} not found!"])
+                ->withInput();
+        }
+
+        $data = $request->all();
+        if (empty($data['slug'])) {
+            $data['slug'] = 'slug';
+        }
+        if (empty($data['is_published'])) {
+            $data['is_published'] = 0;
+        } else {
+            $data['is_published'] = 1;
+        }
+
+        $result = $item->fill($data)->save();
+
+        if (!$result) {
+            return back()
+                ->withErrors(['msg' => 'Error!'])
+                ->withInput();
+        }
+
+        return redirect('/blog/posts');
     }
 
     /**

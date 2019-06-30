@@ -7,6 +7,8 @@ use App\Http\Controllers\Blog\BaseController;
 
 class BlogPost extends Model
 {
+    protected $primaryKey = 'post_id';
+
     protected $fillable = [
         'title',
         "slug",

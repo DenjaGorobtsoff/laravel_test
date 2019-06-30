@@ -6,7 +6,7 @@
                 @php
                    // dd($items->getQueueableClass());
                 @endphp
-                @if( $items->getQueueableClass() != 'App\Models\BlogPost' )
+                @if(isset($recipes))
                 <ul class="navbar-nav ml-auto">
                     <!-- Authentication Links -->
                     <li class="nav-item">

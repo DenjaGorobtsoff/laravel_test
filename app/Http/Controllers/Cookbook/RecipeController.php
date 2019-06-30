@@ -39,13 +39,10 @@ class RecipeController extends BaseController
     {
         $recipe = $request->input();
 
-        $table = new CookbookRecipe();
-
         $recipe['user_id'] = auth()->user()->id;
 
-        $table
-            ->fill($recipe)
-            ->save();
+        $table = new CookbookRecipe($recipe);
+        $table->save();
 
         return redirect('/cookbook/recipe');
     }

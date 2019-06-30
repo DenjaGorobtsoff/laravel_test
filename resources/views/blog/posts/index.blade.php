@@ -11,6 +11,7 @@
                         <td>{{ $item->post_id }}</td>
                         <td>{{ $item->title }}</td>
                         <td>{{ $item->created_at }}</td>
+                        <td><a class="nav-link" href="{{ route('blog.posts.edit', $item->post_id) }}">{{ __('edit') }}</a></td>
                     </tr>
                 @endforeach
             </table>
