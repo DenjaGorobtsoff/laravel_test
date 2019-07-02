@@ -12,6 +12,15 @@ use App\Repositories\CategoryRepositories;
 
 class PostController extends BaseController
 {
+    private $BlogRepositories;
+
+    protected function __construct()
+    {
+        parent::__construct();
+
+        $this->BlogRepositories = app(BlogRepositories::class);
+    }
+
     /**
      * Display a listing of the resource.
      *

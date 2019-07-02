@@ -7,5 +7,11 @@ use App\Http\Controllers\Controller;
 
 abstract class BaseController extends Controller
 {
-    //
+    /**
+     * BaseController constructor.
+     */
+    protected function __construct()
+    {
+
+    }
 }
