@@ -6,7 +6,7 @@ use App\Models\BlogCategory as Model;
 use Composer\Repository\ComposerRepository;
 use Illuminate\Database\Eloquent\Collection;
 
-class CategoryRepositories extends CoreRepositories
+class CategoryBlogRepositories extends CoreRepositories
 {
     protected function getModelClass()
     {
@@ -15,7 +15,14 @@ class CategoryRepositories extends CoreRepositories
 
     public function getSelectItems()
     {
-        return $this->table()->all();
+        $columns =implode(',', ['category_id', 'title']);
+
+        $result = $this->table()
+            ->selectRaw($columns)
+            ->toBase()
+            ->get();
+
+        return $result;
     }
 
 }

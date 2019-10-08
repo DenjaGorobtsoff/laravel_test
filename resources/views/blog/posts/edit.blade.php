@@ -45,7 +45,7 @@
                         <label for="exampleInputEmail1">Category</label>
                         <select class="form-control" name="category_id" id="exampleFormControlSelect1">
                             <option value="0"></option>
-                            @foreach($forSelect as $category)
+                            @foreach($categories as $category)
                                 @if ($category->category_id == old('category_id', $item->category_id))
                                     <option value="{{ $category->category_id }}" selected>{{ $category->title }}</option>
                                 @endif

@@ -6,19 +6,26 @@ use App\Http\Requests\BlogCreateValidation;
 use App\Models\BlogCategory as Categories;
 use App\Models\BlogPost;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Repositories\BlogRepositories;
-use App\Repositories\CategoryRepositories;
+use App\Repositories\BlogPostRepositories;
+use App\Repositories\CategoryBlogRepositories;
 
+
+/**
+ * Class PostController
+ * @package App\Http\Controllers\Blog
+ */
 class PostController extends BaseController
 {
+    /**
+     * @var BlogPostRepositories
+     */
     private $BlogRepositories;
 
-    protected function __construct()
+    public function __construct()
     {
         parent::__construct();
 
-        $this->BlogRepositories = app(BlogRepositories::class);
+        $this->BlogRepositories = app(BlogPostRepositories::class);
     }
 
     /**
@@ -28,7 +35,7 @@ class PostController extends BaseController
      */
     public function index()
     {
-        $items = BlogPost::orderBy('created_at', 'desc')->get();
+        $items = $this->BlogRepositories->getAll();
         return view('blog.posts.index', compact('items'));
     }
 
@@ -85,18 +92,18 @@ class PostController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, BlogRepositories $blogRepository)
+    public function edit($id, CategoryBlogRepositories $categoryRepositoriesRepository)
     {
-        $item = $blogRepository->getEdit($id);
+        $item =  $this->BlogRepositories->getEdit($id);
 
         if (empty($item)) {
             abort(404);
         }
 
-        $categories = new CategoryRepositories();
-        $forSelect = $categories->getSelectItems();
+        $categories = $categoryRepositoriesRepository->getSelectItems();
 
-        return view('blog.posts.edit', compact('item', 'forSelect'));
+
+        return view('blog.posts.edit', compact('item', 'categories'));
     }
 
     /**
